@@ -1,22 +1,22 @@
 import { resolveComponent as c, openBlock as n, createBlock as d, resolveDynamicComponent as P, mergeProps as a, withCtx as b, createTextVNode as D, toDisplayString as C, createElementBlock as r, createVNode as u, normalizeClass as T, Fragment as S, renderList as j, createElementVNode as m, createCommentVNode as $, normalizeProps as f, guardReactiveProps as I, renderSlot as g, normalizeStyle as L, getCurrentInstance as fe } from "vue";
-const _e = (e) => e.reduce((t, s) => t + s[0], ""), ke = (e) => {
+const ke = (e) => e.reduce((t, s) => t + s[0], ""), _e = (e) => {
   const t = [];
   let s, l = -1;
   return Object.keys(e).forEach((p) => {
     var o, i;
-    (i = (o = e[p].value) == null ? void 0 : o.content) == null || i.forEach((k) => {
+    (i = (o = e[p].value) == null ? void 0 : o.content) == null || i.forEach((_) => {
       var R, w;
-      const y = (w = (R = e[k]) == null ? void 0 : R.value) == null ? void 0 : w.type;
-      y && y !== s && (l++, s = y, t[l] = []), t[l].push(k);
+      const y = (w = (R = e[_]) == null ? void 0 : R.value) == null ? void 0 : w.type;
+      y && y !== s && (l++, s = y, t[l] = []), t[l].push(_);
     }), s = void 0;
   }), t;
 }, q = (e, t) => {
-  const l = ke(t).find((p) => p.includes(e));
+  const l = _e(t).find((p) => p.includes(e));
   if (l)
     return l.indexOf(e) + 1;
 }, ge = (e = "", t) => {
   const s = new URL(
-    `https://www.notion.so${e.startsWith("/image") ? e : `/image/${encodeURIComponent(e)}`}`
+    `https://www.notion.so${e.startsWith("/image") || e.startsWith("/icons") ? e : `/image/${encodeURIComponent(e)}`}`
   );
   if (t && !e.includes("/images/page-cover/")) {
     const l = t.value.parent_table === "space" ? "block" : t.value.parent_table;
@@ -132,11 +132,11 @@ const _e = (e) => e.reduce((t, s) => t + s[0], ""), ke = (e) => {
     var e;
     return this.blockMap[(e = this.value) == null ? void 0 : e.parent_id];
   }
-}, _ = {
+}, k = {
   props: O,
   computed: v,
   methods: {
-    getTextContent: _e,
+    getTextContent: ke,
     isType(e) {
       return Array.isArray(e) ? this.visible && e.includes(this.type) : this.visible && this.type === e;
     },
@@ -158,7 +158,7 @@ const _e = (e) => e.reduce((t, s) => t + s[0], ""), ke = (e) => {
     s[l] = p;
   return s;
 }, $e = {
-  extends: _,
+  extends: k,
   name: "NotionDecorator",
   props: { ...O, content: Array },
   computed: {
@@ -267,7 +267,7 @@ function we(e, t, s, l, p, o) {
   }, e.pass), null, 16, ["content"]));
 }
 const U = /* @__PURE__ */ h($e, [["render", we]]), Ie = {
-  extends: _,
+  extends: k,
   name: "NotionTextRenderer",
   props: { ...O, text: Array },
   components: {
@@ -277,14 +277,14 @@ const U = /* @__PURE__ */ h($e, [["render", we]]), Ie = {
 function Se(e, t, s, l, p, o) {
   const i = c("NotionDecorator");
   return n(), r("span", null, [
-    (n(!0), r(S, null, j(s.text, (k, y) => (n(), d(i, a({
+    (n(!0), r(S, null, j(s.text, (_, y) => (n(), d(i, a({
       key: y,
-      content: k
+      content: _
     }, e.pass), null, 16, ["content"]))), 128))
   ]);
 }
 const N = /* @__PURE__ */ h(Ie, [["render", Se]]), Be = {
-  extends: _,
+  extends: k,
   name: "NotionBookmark",
   components: { NotionTextRenderer: N }
 }, je = { class: "notion-row" }, Ue = ["href"], Me = { class: "notion-bookmark-title" }, Ve = {
@@ -335,12 +335,12 @@ function He(e, t, s, l, p, o) {
   ]);
 }
 const F = /* @__PURE__ */ h(Be, [["render", He]]), Ke = {
-  extends: _,
+  extends: k,
   name: "NotionPageIcon",
   props: { ...O, big: Boolean }
 }, Ee = ["src", "alt"], We = ["aria-label"];
 function ze(e, t, s, l, p, o) {
-  return e.icon.includes("http") ? (n(), r("img", {
+  return e.icon.includes("http") || e.icon.includes("/icons") ? (n(), r("img", {
     key: 0,
     class: T([
       e.format.page_cover && "notion-page-icon-offset",
@@ -360,7 +360,7 @@ function ze(e, t, s, l, p, o) {
   }, C(e.icon), 11, We)) : $("", !0);
 }
 const M = /* @__PURE__ */ h(Ke, [["render", ze]]), Qe = {
-  extends: _,
+  extends: k,
   name: "NotionCallout",
   components: {
     NotionPageIcon: M,
@@ -368,7 +368,7 @@ const M = /* @__PURE__ */ h(Ke, [["render", ze]]), Qe = {
   }
 }, Je = { class: "notion-callout-text" };
 function Ge(e, t, s, l, p, o) {
-  const i = c("NotionPageIcon"), k = c("NotionTextRenderer");
+  const i = c("NotionPageIcon"), _ = c("NotionTextRenderer");
   return n(), r("div", {
     class: T(["notion-callout", e.blockColorClass(), e.blockColorClass("_co")])
   }, [
@@ -376,13 +376,13 @@ function Ge(e, t, s, l, p, o) {
       u(i, f(I(e.pass)), null, 16)
     ]),
     m("div", Je, [
-      u(k, a({ text: e.title }, e.pass), null, 16, ["text"]),
+      u(_, a({ text: e.title }, e.pass), null, 16, ["text"]),
       g(e.$slots, "default")
     ])
   ], 2);
 }
 const H = /* @__PURE__ */ h(Qe, [["render", Ge]]), Xe = {
-  extends: _,
+  extends: k,
   name: "NotionCode",
   props: { ...O, overrideLang: String, overrideLangClass: String },
   computed: {
@@ -434,7 +434,7 @@ function xe(e, t, s, l, p, o) {
   ], 64);
 }
 const K = /* @__PURE__ */ h(Ze, [["render", xe]]), et = {
-  extends: _,
+  extends: k,
   name: "NotionEquation",
   components: { NotionCode: V },
   computed: {
@@ -455,7 +455,7 @@ function ot(e, t, s, l, p, o) {
   }), null, 16));
 }
 const B = /* @__PURE__ */ h(et, [["render", ot]]), nt = {
-  extends: _,
+  extends: k,
   name: "NotionAsset",
   computed: {
     ...v,
@@ -482,7 +482,7 @@ function at(e, t, s, l, p, o) {
   ], 4);
 }
 const E = /* @__PURE__ */ h(nt, [["render", at]]), rt = {
-  extends: _,
+  extends: k,
   name: "NotionImage",
   computed: {
     ...v,
@@ -529,7 +529,7 @@ function ct(e, t, s, l, p, o) {
   }, o.imageProps), null, 16, lt));
 }
 const W = /* @__PURE__ */ h(rt, [["render", ct]]), pt = {
-  extends: _,
+  extends: k,
   name: "NotionFigure",
   components: {
     NotionAsset: E,
@@ -541,19 +541,19 @@ const W = /* @__PURE__ */ h(rt, [["render", ct]]), pt = {
   class: "notion-image-caption"
 };
 function ut(e, t, s, l, p, o) {
-  const i = c("NotionImage"), k = c("NotionAsset"), y = c("NotionTextRenderer");
+  const i = c("NotionImage"), _ = c("NotionAsset"), y = c("NotionTextRenderer");
   return n(), r("figure", {
     class: "notion-asset-wrapper",
     style: L(e.width)
   }, [
-    e.isType("image") ? (n(), d(i, f(a({ key: 0 }, e.pass)), null, 16)) : e.isType(["embed", "video", "figma"]) ? (n(), d(k, f(a({ key: 1 }, e.pass)), null, 16)) : $("", !0),
+    e.isType("image") ? (n(), d(i, f(a({ key: 0 }, e.pass)), null, 16)) : e.isType(["embed", "video", "figma"]) ? (n(), d(_, f(a({ key: 1 }, e.pass)), null, 16)) : $("", !0),
     e.caption ? (n(), r("figcaption", dt, [
       u(y, a({ text: e.caption }, e.pass), null, 16, ["text"])
     ])) : $("", !0)
   ], 4);
 }
 const z = /* @__PURE__ */ h(pt, [["render", ut]]), mt = {
-  extends: _,
+  extends: k,
   name: "NotionHeader",
   components: { NotionTextRenderer: N }
 }, ht = {
@@ -562,22 +562,22 @@ const z = /* @__PURE__ */ h(pt, [["render", ut]]), mt = {
 }, ft = {
   key: 1,
   class: "notion-h2"
-}, _t = {
+}, kt = {
   key: 2,
   class: "notion-h3"
 };
-function kt(e, t, s, l, p, o) {
+function _t(e, t, s, l, p, o) {
   const i = c("NotionTextRenderer");
   return e.type === "header" ? (n(), r("h1", ht, [
     u(i, a({ text: e.title }, e.pass), null, 16, ["text"])
   ])) : e.type === "sub_header" ? (n(), r("h2", ft, [
     u(i, a({ text: e.title }, e.pass), null, 16, ["text"])
-  ])) : e.type === "sub_sub_header" ? (n(), r("h3", _t, [
+  ])) : e.type === "sub_sub_header" ? (n(), r("h3", kt, [
     u(i, a({ text: e.title }, e.pass), null, 16, ["text"])
   ])) : $("", !0);
 }
-const Q = /* @__PURE__ */ h(mt, [["render", kt]]), gt = {
-  extends: _,
+const Q = /* @__PURE__ */ h(mt, [["render", _t]]), gt = {
+  extends: k,
   name: "NotionNestedList",
   computed: {
     ...v,
@@ -601,7 +601,7 @@ function bt(e, t, s, l, p, o) {
   ]));
 }
 const J = /* @__PURE__ */ h(gt, [["render", bt]]), Nt = {
-  extends: _,
+  extends: k,
   name: "NotionList",
   components: { NotionNestedList: J, NotionTextRenderer: N },
   computed: {
@@ -620,12 +620,12 @@ const J = /* @__PURE__ */ h(gt, [["render", bt]]), Nt = {
   class: "notion-list notion-list-disc"
 }, Tt = ["start"], Pt = { key: 2 };
 function Ct(e, t, s, l, p, o) {
-  const i = c("NotionTextRenderer"), k = c("NotionNestedList");
+  const i = c("NotionTextRenderer"), _ = c("NotionNestedList");
   return o.isTopLevel && e.type === "bulleted_list" ? (n(), r("ul", vt, [
     m("li", null, [
       u(i, a({ text: e.title }, e.pass), null, 16, ["text"])
     ]),
-    e.value.content ? (n(), d(k, f(a({ key: 0 }, e.pass)), {
+    e.value.content ? (n(), d(_, f(a({ key: 0 }, e.pass)), {
       default: b(() => [
         g(e.$slots, "default")
       ]),
@@ -639,7 +639,7 @@ function Ct(e, t, s, l, p, o) {
     m("li", null, [
       u(i, a({ text: e.title }, e.pass), null, 16, ["text"])
     ]),
-    e.value.content ? (n(), d(k, f(a({ key: 0 }, e.pass)), {
+    e.value.content ? (n(), d(_, f(a({ key: 0 }, e.pass)), {
       default: b(() => [
         g(e.$slots, "default")
       ]),
@@ -649,7 +649,7 @@ function Ct(e, t, s, l, p, o) {
     m("li", null, [
       u(i, a({ text: e.title }, e.pass), null, 16, ["text"])
     ]),
-    e.value.content ? (n(), d(k, f(a({ key: 0 }, e.pass)), {
+    e.value.content ? (n(), d(_, f(a({ key: 0 }, e.pass)), {
       default: b(() => [
         g(e.$slots, "default")
       ]),
@@ -658,7 +658,7 @@ function Ct(e, t, s, l, p, o) {
   ]));
 }
 const G = /* @__PURE__ */ h(Nt, [["render", Ct]]), Lt = {
-  extends: _,
+  extends: k,
   name: "NotionPageHeader",
   components: { Decorator: U }
 }, Rt = { class: "notion-page-header" }, Ot = /* @__PURE__ */ m("div", { class: "notion-nav-breadcrumbs" }, null, -1), wt = [
@@ -668,7 +668,7 @@ function It(e, t, s, l, p, o) {
   return n(), r("header", Rt, wt);
 }
 const X = /* @__PURE__ */ h(Lt, [["render", It]]), St = {
-  extends: _,
+  extends: k,
   name: "NotionPage",
   components: { NotionPageHeader: X, NotionPageIcon: M, NotionTextRenderer: N },
   computed: {
@@ -685,7 +685,7 @@ const X = /* @__PURE__ */ h(Lt, [["render", It]]), St = {
   class: "notion"
 }, Vt = { class: "notion-page-icon" }, At = { class: "notion-page-text" }, Dt = ["target", "href"], qt = { class: "notion-page-icon" }, Ft = { class: "notion-page-text" };
 function Ht(e, t, s, l, p, o) {
-  const i = c("NotionPageIcon"), k = c("NotionTextRenderer");
+  const i = c("NotionPageIcon"), _ = c("NotionTextRenderer");
   return e.level === 0 && e.fullPage ? (n(), r("div", Bt, [
     e.format && e.format.page_cover ? (n(), r("img", {
       key: 0,
@@ -704,7 +704,7 @@ function Ht(e, t, s, l, p, o) {
     }, [
       u(i, a(e.pass, { big: "" }), null, 16),
       m("div", Ut, [
-        u(k, a({ text: e.title }, e.pass), null, 16, ["text"])
+        u(_, a({ text: e.title }, e.pass), null, 16, ["text"])
       ]),
       g(e.$slots, "default")
     ], 2)
@@ -719,7 +719,7 @@ function Ht(e, t, s, l, p, o) {
         u(i, f(I(e.pass)), null, 16)
       ]),
       m("div", At, [
-        u(k, a({ text: e.title }, e.pass), null, 16, ["text"])
+        u(_, a({ text: e.title }, e.pass), null, 16, ["text"])
       ])
     ]),
     _: 1
@@ -733,12 +733,12 @@ function Ht(e, t, s, l, p, o) {
       u(i, f(I(e.pass)), null, 16)
     ]),
     m("div", Ft, [
-      u(k, a({ text: e.title }, e.pass), null, 16, ["text"])
+      u(_, a({ text: e.title }, e.pass), null, 16, ["text"])
     ])
   ], 8, Dt));
 }
 const Y = /* @__PURE__ */ h(St, [["render", Ht]]), Kt = {
-  extends: _,
+  extends: k,
   name: "NotionQuote",
   components: { NotionTextRenderer: N }
 }, Et = {
@@ -752,7 +752,7 @@ function Wt(e, t, s, l, p, o) {
   ])) : $("", !0);
 }
 const Z = /* @__PURE__ */ h(Kt, [["render", Wt]]), zt = {
-  extends: _,
+  extends: k,
   name: "NotionSyncPointer",
   computed: {
     ...v,
@@ -770,7 +770,7 @@ function Qt(e, t, s, l, p, o) {
   }), null, 16, ["blockMap", "contentId"]);
 }
 const Jt = /* @__PURE__ */ h(zt, [["render", Qt]]), Gt = {
-  extends: _,
+  extends: k,
   name: "NotionTable"
 }, Xt = { class: "notion-simple-table-wrapper" }, Yt = { class: "notion-simple-table" };
 function Zt(e, t, s, l, p, o) {
@@ -783,7 +783,7 @@ function Zt(e, t, s, l, p, o) {
   ]);
 }
 const x = /* @__PURE__ */ h(Gt, [["render", Zt]]), xt = {
-  extends: _,
+  extends: k,
   name: "NotionTableRow",
   components: {
     NotionTextRenderer: N
@@ -816,7 +816,7 @@ const x = /* @__PURE__ */ h(Gt, [["render", Zt]]), xt = {
 function oo(e, t, s, l, p, o) {
   const i = c("NotionTextRenderer");
   return n(), r("tr", eo, [
-    (n(!0), r(S, null, j(o.columns, (k, y) => (n(), r("td", {
+    (n(!0), r(S, null, j(o.columns, (_, y) => (n(), r("td", {
       key: y,
       class: "notion-simple-table-data"
     }, [
@@ -825,7 +825,7 @@ function oo(e, t, s, l, p, o) {
       }, [
         m("div", to, [
           u(i, a({
-            text: o.cell(k)
+            text: o.cell(_)
           }, e.pass), null, 16, ["text"])
         ])
       ], 2)
@@ -833,7 +833,7 @@ function oo(e, t, s, l, p, o) {
   ]);
 }
 const ee = /* @__PURE__ */ h(xt, [["render", oo]]), no = {
-  extends: _,
+  extends: k,
   name: "NotionText",
   components: { NotionTextRenderer: N }
 }, so = {
@@ -850,7 +850,7 @@ function ao(e, t, s, l, p, o) {
   ], 2)) : (n(), r("div", so, " "));
 }
 const te = /* @__PURE__ */ h(no, [["render", ao]]), ro = {
-  extends: _,
+  extends: k,
   name: "NotionTodo",
   components: {
     NotionTextRenderer: N
@@ -871,7 +871,7 @@ function lo(e, t, s, l, p, o) {
   ]);
 }
 const oe = /* @__PURE__ */ h(ro, [["render", lo]]), co = {
-  extends: _,
+  extends: k,
   name: "NotionToggle",
   components: { NotionTextRenderer: N }
 }, po = { class: "notion-toggle" };
@@ -887,7 +887,7 @@ function uo(e, t, s, l, p, o) {
   ]);
 }
 const ne = /* @__PURE__ */ h(co, [["render", uo]]), mo = {
-  extends: _,
+  extends: k,
   name: "NotionBlock",
   components: {
     NotionBookmark: F,
@@ -917,15 +917,15 @@ const ne = /* @__PURE__ */ h(co, [["render", uo]]), mo = {
 }, ho = { key: 1 }, fo = {
   key: 11,
   class: "notion-row"
-}, _o = {
+}, ko = {
   key: 17,
   class: "notion-sync-block"
-}, ko = {
+}, _o = {
   key: 19,
   class: "notion-hr"
 }, go = { key: 20 };
 function yo(e, t, s, l, p, o) {
-  const i = c("NotionPage"), k = c("NotionHeader"), y = c("NotionBookmark"), R = c("NotionCallout"), w = c("NotionCode"), se = c("NotionEquation"), ae = c("NotionText"), re = c("NotionQuote"), ie = c("NotionTodo"), le = c("NotionToggle"), ce = c("NotionColumn"), pe = c("NotionList"), de = c("NotionFigure"), ue = c("NotionTable"), me = c("NotionSyncPointer"), he = c("NotionTableRow");
+  const i = c("NotionPage"), _ = c("NotionHeader"), y = c("NotionBookmark"), R = c("NotionCallout"), w = c("NotionCode"), se = c("NotionEquation"), ae = c("NotionText"), re = c("NotionQuote"), ie = c("NotionTodo"), le = c("NotionToggle"), ce = c("NotionColumn"), pe = c("NotionList"), de = c("NotionFigure"), ue = c("NotionTable"), me = c("NotionSyncPointer"), he = c("NotionTableRow");
   return e.blockOverrides.hasOwnProperty(e.type) ? (n(), d(P(e.blockOverrides[e.type]), f(a({ key: 0 }, e.pass)), null, 16)) : e.isType("page") ? (n(), r("div", ho, [
     u(i, f(I(e.pass)), {
       default: b(() => [
@@ -933,7 +933,7 @@ function yo(e, t, s, l, p, o) {
       ]),
       _: 3
     }, 16)
-  ])) : e.isType(["header", "sub_header", "sub_sub_header"]) ? (n(), d(k, f(a({ key: 2 }, e.pass)), null, 16)) : e.isType("bookmark") ? (n(), d(y, f(a({ key: 3 }, e.pass)), null, 16)) : e.isType("callout") ? (n(), d(R, f(a({ key: 4 }, e.pass)), {
+  ])) : e.isType(["header", "sub_header", "sub_sub_header"]) ? (n(), d(_, f(a({ key: 2 }, e.pass)), null, 16)) : e.isType("bookmark") ? (n(), d(y, f(a({ key: 3 }, e.pass)), null, 16)) : e.isType("callout") ? (n(), d(R, f(a({ key: 4 }, e.pass)), {
     default: b(() => [
       g(e.$slots, "default")
     ]),
@@ -963,15 +963,15 @@ function yo(e, t, s, l, p, o) {
       g(e.$slots, "default")
     ]),
     _: 3
-  }, 16)) : o.isRendererRegistered && e.isType("transclusion_reference") ? (n(), d(me, f(a({ key: 16 }, e.pass)), null, 16)) : o.isRendererRegistered && e.isType("transclusion_container") ? (n(), r("div", _o, [
+  }, 16)) : o.isRendererRegistered && e.isType("transclusion_reference") ? (n(), d(me, f(a({ key: 16 }, e.pass)), null, 16)) : o.isRendererRegistered && e.isType("transclusion_container") ? (n(), r("div", ko, [
     g(e.$slots, "default")
-  ])) : e.isType("table_row") ? (n(), d(he, f(a({ key: 18 }, e.pass)), null, 16)) : e.isType("divider") ? (n(), r("hr", ko)) : e.todo && e.visible ? (n(), r("div", go, [
+  ])) : e.isType("table_row") ? (n(), d(he, f(a({ key: 18 }, e.pass)), null, 16)) : e.isType("divider") ? (n(), r("hr", _o)) : e.todo && e.visible ? (n(), r("div", go, [
     D(" todo: " + C(e.type) + " ", 1),
     g(e.$slots, "default")
   ])) : $("", !0);
 }
 const $o = /* @__PURE__ */ h(mo, [["render", yo]]), bo = {
-  extends: _,
+  extends: k,
   name: "NotionRenderer",
   components: {
     NotionBlock: $o
@@ -992,8 +992,8 @@ const $o = /* @__PURE__ */ h(mo, [["render", yo]]), bo = {
   }
 };
 function No(e, t, s, l, p, o) {
-  const i = c("NotionRenderer", !0), k = c("NotionBlock");
-  return s.blockMap && e.value ? (n(), d(k, f(a({ key: 0 }, e.pass)), {
+  const i = c("NotionRenderer", !0), _ = c("NotionBlock");
+  return s.blockMap && e.value ? (n(), d(_, f(a({ key: 0 }, e.pass)), {
     default: b(() => [
       (n(!0), r(S, null, j(e.value.content, (y, R) => (n(), d(i, a(e.pass, {
         key: y,
@@ -1057,7 +1057,7 @@ const Lo = /* @__PURE__ */ h(Po, [["render", Co]]), Ro = {
   }
 };
 export {
-  _ as Blockable,
+  k as Blockable,
   E as NotionAsset,
   F as NotionBookmark,
   H as NotionCallout,
@@ -1091,5 +1091,5 @@ export {
   q as getListNumber,
   So as getPageBlocks,
   Io as getPageTable,
-  _e as getTextContent
+  ke as getTextContent
 };
