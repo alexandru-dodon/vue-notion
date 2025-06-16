@@ -42,7 +42,7 @@ export const getListNumber = (blockId, blockMap) => {
 export const defaultMapImageUrl = (image = "", block) => {
   const url = new URL(
     `https://www.notion.so${
-      image.startsWith("/image") ? image : `/image/${encodeURIComponent(image)}`
+      image.startsWith("/image") ? image : image.startsWith("/icons") ? image : `/image/${encodeURIComponent(image)}`
     }`
   );
 

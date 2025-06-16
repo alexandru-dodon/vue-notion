@@ -1,6 +1,6 @@
 <template>
   <img
-    v-if="icon.includes('http')"
+    v-if="icon.includes('http') || icon.includes('/icons')"
     :class="[
       format.page_cover && 'notion-page-icon-offset',
       big ? 'notion-page-icon-cover' : 'notion-page-icon',
